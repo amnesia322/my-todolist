@@ -1,26 +1,29 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
+import ToDoList, {TaskType} from "./components/ToDoList";
+
+
 
 function App() {
+    //BLL:
+
+    const [tasks, setTasks] = useState<Array<TaskType>>( [
+            {id: 1, title: "HTML&CSS", isDone: true},
+            {id: 2, title: "JS&TS", isDone: true},
+            {id: 3, title: "REACT", isDone: false},
+        ]
+    )
+
+
+
+    const removeTask = (taskID: number) => {
+        setTasks(tasks.filter(t => t.id !== taskID))
+    }
+
+    //UI:
     return (
         <div className="App">
-            <div>
-                <h3>What to learn</h3>
-                <div>
-                    <input/>
-                    <button>+</button>
-                </div>
-                <ul>
-                    <li><input type="checkbox" checked={true}/> <span>HTML&CSS</span></li>
-                    <li><input type="checkbox" checked={true}/> <span>JS</span></li>
-                    <li><input type="checkbox" checked={false}/> <span>React</span></li>
-                </ul>
-                <div>
-                    <button>All</button>
-                    <button>Active</button>
-                    <button>Completed</button>
-                </div>
-            </div>
+            <ToDoList title="What to learn" tasks={tasks} removeTask={removeTask}/>
         </div>
     );
 }
