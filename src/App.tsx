@@ -1,15 +1,16 @@
 import React, {useState} from 'react';
 import './App.css';
 import ToDoList, {TaskType} from "./components/ToDoList";
+import {v1} from "uuid";
 
 export type FilterType = "all" | 'active' | 'completed'
 
 function App() {
     //BLL:
     const [tasks, setTasks] = useState<Array<TaskType>>( [
-            {id: 1, title: "HTML&CSS", isDone: true},
-            {id: 2, title: "JS&TS", isDone: true},
-            {id: 3, title: "REACT", isDone: false},
+            {id: v1(), title: "HTML&CSS", isDone: true},
+            {id: v1(), title: "JS&TS", isDone: true},
+            {id: v1(), title: "REACT", isDone: false},
         ]
     )
 
@@ -19,7 +20,7 @@ function App() {
         setFilter(filter)
     }
 
-    const removeTask = (taskID: number) => {
+    const removeTask = (taskID: string) => {
         setTasks(tasks.filter(t => t.id !== taskID))
     }
 

@@ -2,7 +2,7 @@ import React from 'react';
 import {FilterType} from "../App";
 
 export type TaskType = {
-    id: number,
+    id: string,
     title: string,
     isDone: boolean
 }
@@ -10,11 +10,21 @@ export type TaskType = {
 type ToDoListPropsType = {
     title: string,
     tasks: Array<TaskType>
-    removeTask: (taskID: number) => void
+    removeTask: (taskID: string) => void
     changeFilter: (filter: FilterType) => void
 }
 
 const ToDoList = (props: ToDoListPropsType) => {
+const taskItem = props.tasks.length ? props.tasks.map(t => {
+    return <li key={t.id}><input type="checkbox" checked={t.isDone}/> <span>{t.title}  </span>
+        <button onClick={() => {
+            props.removeTask(t.id)
+        }}>x
+        </button>
+    </li>
+}) : <span>Task-List is empty</span>
+
+
     return (
         <div>
             <h3>{props.title}</h3>
@@ -23,15 +33,7 @@ const ToDoList = (props: ToDoListPropsType) => {
                 <button>+</button>
             </div>
             <ul>
-                {props.tasks.map(t => {
-                    return <li key={t.id}><input type="checkbox" checked={t.isDone}/> <span>{t.title}  </span>
-                        <button onClick={() => {
-                            props.removeTask(t.id)
-                        }}>x
-                        </button>
-                    </li>
-                })}
-
+                {taskItem}
             </ul>
             <div>
                 <button onClick={() => {props.changeFilter('all')}}>All</button>
