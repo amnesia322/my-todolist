@@ -24,6 +24,11 @@ function App() {
         setTasks(tasks.filter(t => t.id !== taskID))
     }
 
+    const addTask = (title: string) => {
+        const newTask = {id: v1(), title: title, isDone: false}
+        setTasks([newTask, ...tasks])
+    }
+
     const getFilteredTasks = () => {
         switch (filter) {
             case "active":
@@ -39,7 +44,7 @@ function App() {
     //UI:
     return (
         <div className="App">
-            <ToDoList title="What to learn" tasks={getFilteredTasks()} removeTask={removeTask} changeFilter={changeFilter}/>
+            <ToDoList title="What to learn" tasks={getFilteredTasks()} removeTask={removeTask} changeFilter={changeFilter} addTask={addTask}/>
         </div>
     );
 }
