@@ -7,11 +7,16 @@ type ToDoListPropsType = {
     addTask: (title: string) => void
     removeTask: (taskID: string) => void
     changeFilter: (filter: FilterValueType) => void
+    changeStatus: (taskID: string, isDone: boolean) => void
 }
 
 const ToDoList = (props: ToDoListPropsType) => {
     const [title, setTitle] = useState('')
+   /* const [error, setError] = useState<boolean>(false)*/
     const onClickAddTask = () => {
+        if (title.trim() === '') {
+            return;
+        }
         props.addTask(title.trim())
         setTitle('')
     }
@@ -23,9 +28,12 @@ const ToDoList = (props: ToDoListPropsType) => {
             props.changeFilter(filter)
         }
     }
+    const onChangeStatusTaskHandler = (taskID: string) => {
+        return (e: ChangeEvent<HTMLInputElement>)=> props.changeStatus(taskID, e.currentTarget.checked)
+    }
 
     const tasksItems = props.tasks.map(t => <li key={t.id}>
-        <input type="checkbox" checked={t.isDone}/>
+        <input type="checkbox" checked={t.isDone} onChange={onChangeStatusTaskHandler(t.id)}/>
         <span>{t.title}</span>
         <button onClick={() => props.removeTask(t.id)}>x</button>
     </li>)
