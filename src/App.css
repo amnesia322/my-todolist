@@ -6,3 +6,39 @@
 .App > div {
   margin-right: 50px;
 }
+
+.task {
+  color: #F3C301
+}
+
+.task button {
+  margin: 0 6px;
+}
+
+.done button {
+  margin: 0 6px;
+}
+
+.error {
+  color: #F3C301;
+}
+
+.errorInput {
+  border: 2px solid #F3C301;
+  outline: none;
+}
+
+.button {
+  background-color: #ADCACB;
+  outline: none;
+}
+
+.active-filter {
+  background-color: #058240;
+  outline: none;
+}
+
+.done {
+  color: #87C159;
+  opacity: 0.7;
+}
