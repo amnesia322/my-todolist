@@ -13,6 +13,7 @@ type ToDoListPropsType = {
     tasks: Array<TaskType>
     addTask: (title: string, toDoListID: string) => void
     removeTask: (taskID: string, toDoListID: string) => void
+    removeToDoList: (id: string) => void
     changeFilter: (filter: FilterValuesType, toDoListID: string) => void
     changeStatus: (taskID: string, isDone: boolean, toDoListID: string) => void
     filter: FilterValuesType
@@ -38,17 +39,19 @@ const ToDoList = (props: ToDoListPropsType) => {
     const onBlurInputError = () => title.trim() === '' ? setError(true) : setError(false)
     const onClickRemoveTask = (taskID: string) => props.removeTask(taskID, props.toDoListID)
     const onClickFilterHandler = (value: FilterValuesType) => props.changeFilter(value, props.toDoListID)
-
+    const onClickRemoveToDoList = () => {props.removeToDoList(props.toDoListID)
+    }
 
     const taskItem = props.tasks.map(t => <li key={t.id} className={t.isDone ? 'done' : 'task'}>
-        <input type="checkbox" checked={t.isDone} onChange={(e) => props.changeStatus(t.id, e.currentTarget.checked, props.toDoListID)}/>
+        <input type="checkbox" checked={t.isDone}
+               onChange={(e) => props.changeStatus(t.id, e.currentTarget.checked, props.toDoListID)}/>
         <span>{t.title}</span>
         <button onClick={() => onClickRemoveTask(t.id)} style={{backgroundColor: '#ADCACB'}}>x</button>
     </li>)
     return (
         <div>
             <div>
-                <h3 style={{color: '#058240'}}>{props.title}</h3>
+                <h3 style={{color: '#058240'}}>{props.title} <button onClick={onClickRemoveToDoList}>x</button></h3>
                 <div>
                     <input value={title} onChange={onChangeHandler} onBlur={onBlurInputError}
                            className={error ? 'errorInput' : ''} onKeyDown={onKeyDownAddTask}/>
