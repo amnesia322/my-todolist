@@ -8,11 +8,12 @@ export type TaskType = {
 }
 
 type ToDoListPropsType = {
+    toDoListID: string
     title: string
     tasks: Array<TaskType>
     addTask: (title: string) => void
     removeTask: (taskID: string) => void
-    changeFilter: (filter: FilterValuesType) => void
+    changeFilter: (filter: FilterValuesType, toDoListID: string) => void
     changeStatus: (taskID: string, isDone: boolean) => void
     filter: FilterValuesType
 }
@@ -33,18 +34,10 @@ const ToDoList = (props: ToDoListPropsType) => {
         props.addTask(title.trim())
         setTitle('')
     }
-    const onKeyDownAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
-        e.key === 'Enter' && onClickAddTask()
-    }
-    const onBlurInputError = () => {
-        title.trim() === '' ? setError(true) : setError(false)
-    }
-    const onClickRemoveTask = (taskID: string) => {
-        props.removeTask(taskID)
-    }
-    const onClickFilterHandler = (value: FilterValuesType) => {
-        props.changeFilter(value)
-    }
+    const onKeyDownAddTask = (e: KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && onClickAddTask()
+    const onBlurInputError = () => title.trim() === '' ? setError(true) : setError(false)
+    const onClickRemoveTask = (taskID: string) => props.removeTask(taskID)
+    const onClickFilterHandler = (value: FilterValuesType) => props.changeFilter(value, props.toDoListID)
 
 
     const taskItem = props.tasks.map(t => <li key={t.id} className={t.isDone ? 'done' : 'task'}>
