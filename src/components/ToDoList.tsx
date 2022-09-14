@@ -12,7 +12,7 @@ type ToDoListPropsType = {
     title: string
     tasks: Array<TaskType>
     addTask: (title: string) => void
-    removeTask: (taskID: string) => void
+    removeTask: (taskID: string, toDoListID: string) => void
     changeFilter: (filter: FilterValuesType, toDoListID: string) => void
     changeStatus: (taskID: string, isDone: boolean) => void
     filter: FilterValuesType
@@ -36,7 +36,7 @@ const ToDoList = (props: ToDoListPropsType) => {
     }
     const onKeyDownAddTask = (e: KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && onClickAddTask()
     const onBlurInputError = () => title.trim() === '' ? setError(true) : setError(false)
-    const onClickRemoveTask = (taskID: string) => props.removeTask(taskID)
+    const onClickRemoveTask = (taskID: string) => props.removeTask(taskID, props.toDoListID)
     const onClickFilterHandler = (value: FilterValuesType) => props.changeFilter(value, props.toDoListID)
 
 
