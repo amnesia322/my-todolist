@@ -11,10 +11,10 @@ type ToDoListPropsType = {
     toDoListID: string
     title: string
     tasks: Array<TaskType>
-    addTask: (title: string) => void
+    addTask: (title: string, toDoListID: string) => void
     removeTask: (taskID: string, toDoListID: string) => void
     changeFilter: (filter: FilterValuesType, toDoListID: string) => void
-    changeStatus: (taskID: string, isDone: boolean) => void
+    changeStatus: (taskID: string, isDone: boolean, toDoListID: string) => void
     filter: FilterValuesType
 }
 
@@ -31,7 +31,7 @@ const ToDoList = (props: ToDoListPropsType) => {
             setError(true)
             return
         }
-        props.addTask(title.trim())
+        props.addTask(title.trim(), props.toDoListID)
         setTitle('')
     }
     const onKeyDownAddTask = (e: KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && onClickAddTask()
@@ -41,7 +41,7 @@ const ToDoList = (props: ToDoListPropsType) => {
 
 
     const taskItem = props.tasks.map(t => <li key={t.id} className={t.isDone ? 'done' : 'task'}>
-        <input type="checkbox" checked={t.isDone} onChange={(e) => props.changeStatus(t.id, e.currentTarget.checked)}/>
+        <input type="checkbox" checked={t.isDone} onChange={(e) => props.changeStatus(t.id, e.currentTarget.checked, props.toDoListID)}/>
         <span>{t.title}</span>
         <button onClick={() => onClickRemoveTask(t.id)} style={{backgroundColor: '#ADCACB'}}>x</button>
     </li>)
